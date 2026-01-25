@@ -81,11 +81,17 @@ function EmailItem({ email }: { email: Email }) {
                 .replace(/<\/div>/gi, "\n");
 
             temp.innerHTML = htmlWithNewlines;
-            const text = (temp.textContent || temp.innerText || "").trim();
+            let text = (temp.textContent || temp.innerText || "").trim();
+
+            // Remove leading whitespace from every line
+            text = text.replace(/^[ \t]+/gm, "");
+
             // Remove consecutive blank lines (more than 2 newlines -> 2 newlines)
             setTextDisplay(text.replace(/\n\s*\n\s*\n/g, '\n\n'));
         } else {
-            setTextDisplay(email.text ? email.text.replace(/\n\s*\n\s*\n/g, '\n\n') : "");
+            let text = email.text || "";
+            text = text.replace(/^[ \t]+/gm, "");
+            setTextDisplay(text.replace(/\n\s*\n\s*\n/g, '\n\n'));
         }
     }, [email.html, email.text]);
 
