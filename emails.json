@@ -1,70 +1,36 @@
 [
   {
-    "id": "bf6eb88e-fbc4-4f25-9bfd-ed9a0e1b2c45",
+    "id": "2e6def9b-c6ce-4e49-bd3b-9b9bbd2735dc",
     "from": {
-      "address": "test@example.com",
-      "name": "Test User"
+      "address": "auto-contact@habbo.com",
+      "name": "Habbo Hotel"
     },
     "to": [
       {
-        "address": "admin@cntct.ca",
+        "address": "contai@cntct.ca",
         "name": ""
       }
     ],
-    "subject": "Hello from Localhost ✔",
-    "text": "Hello world?\nThis is a test email sent to localhost:25.Placeholder\n[https://via.placeholder.com/150]",
-    "html": "<b>Hello world?</b><br>This is a test email sent to localhost:25.<img src=\"https://via.placeholder.com/150\" alt=\"Placeholder\">",
-    "date": "2026-01-25T10:22:11.989Z"
+    "subject": "Your one-time login code for your Habbo account.",
+    "text": "[https://click2.habbo.com/q/4SNQleZQ0zMbHX1ytJvAMg~~/AAD4FBA~/_TFQauSSm2C9kCjCMbGDtvhdW_l6zoyifm30zyVE5Hgsd4W1DWLQZbgOoMB96Bvi]\n\nHabbo\n[data:image/png;base64,R0lGODlhbgAoAKIEAP9mAP/gAP/MAAAAAP///wAAAAAAAAAAACH5BAEAAAQALAAAAABuACgAAAP/SLrc/jDKSasdWOHNux/M1y1iSZYfhGYOqBHrCsfbTHP2zWp6aNuBoDCIGQ49RiMyyVwylbXckxiFzXiDZ7G5mUK33mM3LOaQqS6QGsjVgs/jM1ouNNOjLutb7M7e92RxcnaDeCyAVG50dX6LiGGPXjgNj5WNf4uJmZFTIyGXfG2iSZaKo1CmpAMAVTOpqKehqq+ysLNcAKw7pbGMtL69mrfDULm6aaDAxLXMyrbPzcLFxjWcv9LRAbzLztkYxrkZ1sHaydhw5pDpluDH49zn8ZLvZdfl7e6Z5fb05YLq/7oxwsdBgMGDCBMexKDQIMOGDxsq7CARYkGLEr+1u1gR/2NHjx8RbgiZcCTIkqs2miS5cABLkS5fOowpMyLKjCnBcXxpk2XPljiDnoSJk+DKm0NJ/pwpdCJNpE6LqlwqgCrVjlafEk3KlGvVnNSObo3qNWtTqGjHojRqtqxWoG7Pqp3bku3brmTzplV69+PVihp1ioWrly5enn2xJgYMNtzgw4a/yg35WPFfp43dTYZMeK/fy5gXO8WnOa5pn5Vx7rRMenXnyG0pU+Sr0TXMwFN16N6Nwp0OwTdIO+ZNvHjY33ZLCA9rozXu484zH1sufAP169avV0cmPfvU6OC1Axe/XTr2Xc+Hh//Oljx09+zd78Cyfnz7+/LTi++QP8+J7iP6eWdffNrx158aAkbn3yfFNeigbv/dIMGDFMqQg4QtxNBAAgA7]\n\nHello, contai@cntct.ca\n\nPlease use this code to log in to Habbo. Please note this is a one-time use only\nlogin code. The code will expire after 10 minutes and you will have to request a\nnew code after that in order to login.\n\n834-1765-365\n\n\n\n[https://click2.habbo.com/q/4vkz-7OsyJ80xZ-THMKyeA~~/AAD4FBA~/OjK8p7ODuFIXAdPrn-ujJPFNzyr3GvrDZiWo7Deabh_W34BZQoK0P1QfbROHkLax]",
+    "html": "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">\n<html>\n<head>\n    <meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\">\n    <style type=\"text/css\">\n    </style>\n    <title></title>\n</head>\n\n<body>\n<div style=\"color:transparent;visibility:hidden;opacity:0;font-size:0px;border:0;max-height:1px;width:1px;margin:0px;padding:0px;border-width:0px!important;display:none!important;line-height:0px!important;\"><img border=\"0\" width=\"1\" height=\"1\" src=\"https://click2.habbo.com/q/4SNQleZQ0zMbHX1ytJvAMg~~/AAD4FBA~/_TFQauSSm2C9kCjCMbGDtvhdW_l6zoyifm30zyVE5Hgsd4W1DWLQZbgOoMB96Bvi\" alt=\"\"/></div>\n\n\n<table width=\"98%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n    <tr>\n        <td align=\"center\">\n\n            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"595\">\n                <tr>\n                    <td align=\"left\" style=\"border-bottom: 1px solid #aaaaaa;\" height=\"70\" valign=\"middle\">\n                        <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n                            <tr>\n                                <td>\n                                    <img src=\"data:image/png;base64,R0lGODlhbgAoAKIEAP9mAP/gAP/MAAAAAP///wAAAAAAAAAAACH5BAEAAAQALAAAAABuACgAAAP/SLrc/jDKSasdWOHNux/M1y1iSZYfhGYOqBHrCsfbTHP2zWp6aNuBoDCIGQ49RiMyyVwylbXckxiFzXiDZ7G5mUK33mM3LOaQqS6QGsjVgs/jM1ouNNOjLutb7M7e92RxcnaDeCyAVG50dX6LiGGPXjgNj5WNf4uJmZFTIyGXfG2iSZaKo1CmpAMAVTOpqKehqq+ysLNcAKw7pbGMtL69mrfDULm6aaDAxLXMyrbPzcLFxjWcv9LRAbzLztkYxrkZ1sHaydhw5pDpluDH49zn8ZLvZdfl7e6Z5fb05YLq/7oxwsdBgMGDCBMexKDQIMOGDxsq7CARYkGLEr+1u1gR/2NHjx8RbgiZcCTIkqs2miS5cABLkS5fOowpMyLKjCnBcXxpk2XPljiDnoSJk+DKm0NJ/pwpdCJNpE6LqlwqgCrVjlafEk3KlGvVnNSObo3qNWtTqGjHojRqtqxWoG7Pqp3bku3brmTzplV69+PVihp1ioWrly5enn2xJgYMNtzgw4a/yg35WPFfp43dTYZMeK/fy5gXO8WnOa5pn5Vx7rRMenXnyG0pU+Sr0TXMwFN16N6Nwp0OwTdIO+ZNvHjY33ZLCA9rozXu484zH1sufAP169avV0cmPfvU6OC1Axe/XTr2Xc+Hh//Oljx09+zd78Cyfnz7+/LTi++QP8+J7iP6eWdffNrx158aAkbn3yfFNeigbv/dIMGDFMqQg4QtxNBAAgA7\" alt=\"Habbo\" width=\"110\" height=\"40\" style=\"margin-left: 12px; display: block;\">\n                                </td>\n                            </tr>\n\n                        </table>\n                    </td>\n                </tr>\n\n\n<tr>\n    <td align=\"left\" style=\"border-bottom: 1px dashed #aaaaaa;\"  valign=\"middle\">\n        <table style=\"margin-left: 12px; margin-right: 12px; padding: 0 0 10px 0; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n            <tr>\n                <td valign=\"top\">\n\n<p style=\"font-family: Verdana,Arial,sans-serif; font-size: 20px; padding-top: 15px;\">\n    Hello, <b><span style=\"font-weight:bold\">contai@cntct.ca</span></b>\n</p>\n<p style=\"font-family: Verdana,Arial,sans-serif; font-size: 12px; padding-bottom: 5px;\">\n    Please use this code to log in to Habbo. Please note this is a one-time use only login code. The code will expire after 10 minutes and you will have to request a new code after that in order to login.\n</p>\n<p style=\"font-family: Verdana,Arial,sans-serif; font-size: 30px; text-align: center;\">\n    834-1765-365\n</p>\n\n</td>\n</tr>\n</table>\n</td>\n</tr>\n<tr>\n    <td valign=\"top\" align=\"center\">\n        <table style=\"font-family: Verdana,Arial,sans-serif; text-align: justify; font-size:11px; color:#aaaaaa; padding-top: 10px;padding-right: 10px;padding-left: 10px;padding-bottom: 10px; margin-top: 0pt;margin-right: 0pt;margin-left: 0pt;margin-bottom: 0pt;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"595\">\n            <tr>\n                <td style=\"height:8px\"><!-- Dummy --></td>\n            </tr>\n            <tr>\n                <td valign=\"top\">\n                                </td>\n            </tr>\n        </table>\n    </td>\n</tr>\n</table>\n\n</td>\n</tr>\n</table>\n\n<img border=\"0\" width=\"1\" height=\"1\" alt=\"\" src=\"https://click2.habbo.com/q/4vkz-7OsyJ80xZ-THMKyeA~~/AAD4FBA~/OjK8p7ODuFIXAdPrn-ujJPFNzyr3GvrDZiWo7Deabh_W34BZQoK0P1QfbROHkLax\">\n</body>\n</html>",
+    "date": "2026-01-25T11:07:11.932Z"
   },
   {
-    "id": "fb573f52-45ec-400a-91a6-75ce7becf738",
+    "id": "49d71676-0b65-40aa-8315-271c340735eb",
     "from": {
-      "address": "test@example.com",
-      "name": "Test User"
+      "address": "auto-contact@habbo.com",
+      "name": "Habbo"
     },
     "to": [
       {
-        "address": "admin@cntct.ca",
+        "address": "contai@cntct.ca",
         "name": ""
       }
     ],
-    "subject": "Hello from Localhost ✔",
-    "text": "Hello world?\nThis is a test email sent to localhost:25.Placeholder\n[https://via.placeholder.com/150]",
-    "html": "<b>Hello world?</b><br>This is a test email sent to localhost:25.<img src=\"https://via.placeholder.com/150\" alt=\"Placeholder\">",
-    "date": "2026-01-25T09:55:35.879Z"
-  },
-  {
-    "id": "0691cef1-579c-48a4-86bd-295d3acbb7ab",
-    "from": {
-      "address": "test@example.com",
-      "name": "Test User"
-    },
-    "to": [
-      {
-        "address": "admin@local.test",
-        "name": ""
-      }
-    ],
-    "subject": "Hello from Localhost ✔",
-    "text": "Hello world?\nThis is a test email sent to localhost:25.Placeholder\n[https://via.placeholder.com/150]",
-    "html": "<b>Hello world?</b><br>This is a test email sent to localhost:25.<img src=\"https://via.placeholder.com/150\" alt=\"Placeholder\">",
-    "date": "2026-01-25T09:54:42.705Z"
-  },
-  {
-    "id": "935935b9-7e5a-41fc-b92f-394c5c96b937",
-    "from": {
-      "address": "test@example.com",
-      "name": "Test User"
-    },
-    "to": [
-      {
-        "address": "admin@local.test",
-        "name": ""
-      }
-    ],
-    "subject": "Hello from Localhost ✔",
-    "text": "Hello world?",
-    "html": "<b>Hello world?</b><br>This is a test email sent to localhost:25.",
-    "date": "2026-01-25T09:50:29.215Z"
+    "subject": "Welcoming you to Habbo",
+    "text": "[https://click2.habbo.com/q/en-u8M2aVOYBXZW87LFkzQ~~/AAD4FBA~/pSZqWXcDK-W1Fp8QwHbYqT5-dlNQrHEXMlBLoGSsqW_6Vqvnkv7TzGdJJC0Q6Hyc]\n\nHabbo\n[data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAAAoBAMAAADtdNK5AAAAElBMVEX/////ZgD/4AD/zAAAAAD///95BEdsAAAAAXRSTlMAQObYZgAAAQBJREFUeF7FltGJwzAMQPXhDGDwBEc2uAzg3L0B+tP9VzmFRlaDwCaGo6+gPLAeJv2KzLA8RWhUSecTCCaSmj30h5NsCaJJarYsz0X4Ul4DdXsGk3aq3ePaqZlEM6Uuynv3c3ardtH89Hi/ma4e/6d3tjM0ROa6at29UZjrMnWuK8x1maqdcaMrnU4xix39bnW7dLnfrbiF7tvgOpQNNz8IXbTNrdONbNz1h3d8rONjnRLtn7vNjV+z2W4fd7g1ZdyBWwazV9djd8vFbNztGXzZTV0SKiUOxS04IuwqcRyYBS/I1IWlyo0LaU6VwYUFPEtnCHLAmPiZoKTucnpfbvYHgnF/FbXSNmsAAAAASUVORK5CYII=]\n\n\nHEY THERE!\n\nA yellow ducky told us that you have registered to Habbo with the email\ncontai@cntct.ca.\n\nClick here to securely activate your account\n[https://click2.habbo.com/f/a/OaVJyQD_gXb7L7XEiIJ_1g~~/AAD4FBA~/xM8cAcTv-eQDWU9W2KU9iD8tW1Y4uu1htx1Ta_h2siYdc6ixEdWIEburpqNSCmmVRKLyN4LDT6JwexGXEWKk7pJTOB9ET-aVP9QW-8TrVeTLpF7V-roc9cHyv4TUTc4RvtxWs2fZaedxVIsorc0KrA~~]\n\n– Habbo Staff\n\nIf you did not create this account yourself and do not want to receive emails\nfrom us anymore, click here\n[https://click2.habbo.com/f/a/5u964b89ADHSZyBzu4p6vw~~/AAD4FBA~/nPl3mpzwjLie3m8K6jRYic7n6E5R7cAarvEwmbTBroolWKrhk46yXlfE-VGzia7eOZRw6yHHt3mCGauui97tq0zjPLUTGjoq9KQ3aLiGVpVsAd5DAPf0sLzs_XqOImf1lcYdjduhWkwG-2fh0YDTjYuacJTenG-GXE3derKW_g13uZgNrU5LsgisfOyrm0MVWXLxB2KcTqSFBiVfLe6nqDQlOINJnjnPnjLqjJ2GTQU~].\n\n© 2004-2019 Sulake Oy. HABBO is a registered trademark of Sulake Oy in the\nEuropean Union, the USA, Japan, the People's Republic of China and various other\njurisdictions. All rights reserved.\n\n[https://click2.habbo.com/q/qF55Bz60iFsbIEIehyHipA~~/AAD4FBA~/6Y_uVGAFaMfZZdyfQ-WO39zISXN-ee50ceiLArl9f-4wmpOYiyBn68FtoBVF8p18]",
+    "html": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"http://fonts.googleapis.com/css?family=Ubuntu:regular,bold|Ubuntu+Condensed:regular\">\n    \n</head>\n<body style=\"background-color: #ffffff; -webkit-font-smoothing: antialiased; margin: 0; padding: 0; -ms-text-size-adjust: none; -webkit-text-size-adjust: none; width: 100%;\">\n<div style=\"color:transparent;visibility:hidden;opacity:0;font-size:0px;border:0;max-height:1px;width:1px;margin:0px;padding:0px;border-width:0px!important;display:none!important;line-height:0px!important;\"><img border=\"0\" width=\"1\" height=\"1\" src=\"https://click2.habbo.com/q/en-u8M2aVOYBXZW87LFkzQ~~/AAD4FBA~/pSZqWXcDK-W1Fp8QwHbYqT5-dlNQrHEXMlBLoGSsqW_6Vqvnkv7TzGdJJC0Q6Hyc\" alt=\"\"/></div>\n\n    <table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"600\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;\">\n        <tr>\n            <td class=\"container\" style=\"color: #000000; font-family: 'Ubuntu', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; border-collapse: collapse; padding: 0 10px 0 10px;\">\n                <table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"full\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;\" width=\"100%\">\n                    <tr>\n                        <td align=\"left\" class=\"header\" style=\"color: #000000; font-family: 'Ubuntu', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; border-collapse: collapse; padding: 10px 0 0 0;\"><img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAAAoBAMAAADtdNK5AAAAElBMVEX/////ZgD/4AD/zAAAAAD///95BEdsAAAAAXRSTlMAQObYZgAAAQBJREFUeF7FltGJwzAMQPXhDGDwBEc2uAzg3L0B+tP9VzmFRlaDwCaGo6+gPLAeJv2KzLA8RWhUSecTCCaSmj30h5NsCaJJarYsz0X4Ul4DdXsGk3aq3ePaqZlEM6Uuynv3c3ardtH89Hi/ma4e/6d3tjM0ROa6at29UZjrMnWuK8x1maqdcaMrnU4xix39bnW7dLnfrbiF7tvgOpQNNz8IXbTNrdONbNz1h3d8rONjnRLtn7vNjV+z2W4fd7g1ZdyBWwazV9djd8vFbNztGXzZTV0SKiUOxS04IuwqcRyYBS/I1IWlyo0LaU6VwYUFPEtnCHLAmPiZoKTucnpfbvYHgnF/FbXSNmsAAAAASUVORK5CYII=\" alt=\"Habbo\" height=\"40\" width=\"110\" style=\"-ms-interpolation-mode: bicubic; image-rendering: pixelated;\">\n</td>\n                    </tr>\n                </table>\n                <table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"full\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;\" width=\"100%\">\n                    <tr>\n                        <td align=\"left\" class=\"content\" style=\"color: #000000; font-family: 'Ubuntu', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; border-collapse: collapse; padding: 32px 0 24px 0;\"><h1 id=\"hey-there\" style=\"font-family: 'Ubuntu Condensed', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; font-size: 24px; font-weight: normal; line-height: 1; margin: 0; padding: 0 0 24px 0;\">Hey there!</h1>\n<p style=\"font-family: 'Ubuntu', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; font-size: 16px; line-height: 1.4; padding: 0; margin: 0 0 16px 0; color: #000000;\">A yellow ducky told us that you have registered to Habbo with the email contai<span>@</span>cntct<span>.</span>ca.</p>\n<p style=\"font-family: 'Ubuntu', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; font-size: 16px; line-height: 1.4; margin: 16px 0 16px 0; padding: 0; color: #000000;\"><a href=\"https://click2.habbo.com/f/a/OaVJyQD_gXb7L7XEiIJ_1g~~/AAD4FBA~/xM8cAcTv-eQDWU9W2KU9iD8tW1Y4uu1htx1Ta_h2siYdc6ixEdWIEburpqNSCmmVRKLyN4LDT6JwexGXEWKk7pJTOB9ET-aVP9QW-8TrVeTLpF7V-roc9cHyv4TUTc4RvtxWs2fZaedxVIsorc0KrA~~\" style=\"text-decoration: none; background-color: #00813e; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; color: #ffffff; display: inline-block; font-family: 'Ubuntu Condensed', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; font-size: 18px; padding: 8px 24px;\">Click here to securely activate your account</a></p>\n<p style=\"font-family: 'Ubuntu', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; font-size: 16px; line-height: 1.4; margin: 16px 0 16px 0; padding: 0; color: #000000;\">– Habbo Staff</p>\n<p style=\"font-family: 'Ubuntu', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; font-size: 16px; line-height: 1.4; padding: 0; margin: 16px 0 0 0; color: #000000;\">If you did not create this account yourself and do not want to receive emails from us anymore, <a href=\"https://click2.habbo.com/f/a/5u964b89ADHSZyBzu4p6vw~~/AAD4FBA~/nPl3mpzwjLie3m8K6jRYic7n6E5R7cAarvEwmbTBroolWKrhk46yXlfE-VGzia7eOZRw6yHHt3mCGauui97tq0zjPLUTGjoq9KQ3aLiGVpVsAd5DAPf0sLzs_XqOImf1lcYdjduhWkwG-2fh0YDTjYuacJTenG-GXE3derKW_g13uZgNrU5LsgisfOyrm0MVWXLxB2KcTqSFBiVfLe6nqDQlOINJnjnPnjLqjJ2GTQU~\" style=\"color: #0f7dbc; text-decoration: none;\">click here</a>.</p>\n</td>\n                    </tr>\n                </table>\n                <table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"full\" style=\"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;\" width=\"100%\">\n                    <tr>\n                        <td align=\"center\" class=\"footer\" style=\"font-family: 'Ubuntu', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; border-collapse: collapse; border-top: 1px solid #aaaaaa; color: #818a91; font-size: 10px; line-height: 1.4; padding: 10px;\">© 2004-2019 Sulake Oy. HABBO is a registered trademark of Sulake\nOy in the European Union, the USA, Japan, the People's Republic\nof China and various other jurisdictions. All rights reserved.\n</td>\n                    </tr>\n                </table>\n            </td>\n        </tr>\n    </table>\n\n<img border=\"0\" width=\"1\" height=\"1\" alt=\"\" src=\"https://click2.habbo.com/q/qF55Bz60iFsbIEIehyHipA~~/AAD4FBA~/6Y_uVGAFaMfZZdyfQ-WO39zISXN-ee50ceiLArl9f-4wmpOYiyBn68FtoBVF8p18\">\n</body>\n</html>\n\n",
+    "date": "2026-01-25T11:07:11.847Z"
   }
 ]

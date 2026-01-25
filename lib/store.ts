@@ -22,9 +22,42 @@ export interface Email {
     date: string; // ISO string
 }
 
-export interface Settings {
+export interface User {
+    id: string;
+    username: string;
+    passwordHash: string;
+    role: 'admin' | 'user';
+    allowedDomains: string[]; // ['*'] for all
+    apiKey: string;
+    resetToken?: string;
+    resetTokenExpiry?: number;
+}
+
+export interface Invite {
+    code: string;
+    role: 'admin' | 'user';
     allowedDomains: string[];
-    auth: {
+    used: boolean;
+    expiresAt: number;
+}
+
+export interface SMTPSettings {
+    host: string;
+    port: number;
+    user: string;
+    pass: string;
+    secure: boolean;
+    from: string;
+    enabled: boolean;
+}
+
+export interface Settings {
+    allowedDomains: string[]; // For partial matching of incoming emails
+    users: User[];
+    invites: Invite[];
+    smtp?: SMTPSettings;
+    // Legacy auth support during migration, optional
+    auth?: {
         username: string;
         passwordHash: string;
         apiKey: string;
@@ -36,25 +69,62 @@ if (!fs.existsSync(STORAGE_FILE)) {
     fs.writeFileSync(STORAGE_FILE, JSON.stringify([]));
 }
 if (!fs.existsSync(SETTINGS_FILE)) {
+    const adminUser: User = {
+        id: randomUUID(),
+        username: 'admin',
+        passwordHash: bcrypt.hashSync('password', 10),
+        role: 'admin',
+        allowedDomains: ['*'],
+        apiKey: randomUUID()
+    };
+
     const defaultSettings: Settings = {
         allowedDomains: [],
-        auth: {
-            username: 'admin',
-            passwordHash: bcrypt.hashSync('password', 10),
-            apiKey: randomUUID(),
-        }
+        users: [adminUser],
+        invites: []
     };
     fs.writeFileSync(SETTINGS_FILE, JSON.stringify(defaultSettings, null, 2));
 } else {
     // Migration for existing settings file
     try {
         const current = JSON.parse(fs.readFileSync(SETTINGS_FILE, 'utf-8'));
-        if (!current.auth) {
-            current.auth = {
-                username: 'admin',
-                passwordHash: bcrypt.hashSync('password', 10),
-                apiKey: randomUUID(),
-            };
+        let changed = false;
+
+        // Migrate legacy auth to users array if users doesn't exist
+        if (!current.users || current.users.length === 0) {
+            if (current.auth) {
+                const adminUser: User = {
+                    id: randomUUID(),
+                    username: current.auth.username || 'admin',
+                    passwordHash: current.auth.passwordHash || bcrypt.hashSync('password', 10),
+                    role: 'admin',
+                    allowedDomains: ['*'],
+                    apiKey: current.auth.apiKey || randomUUID()
+                };
+                current.users = [adminUser];
+                // Keep auth for safety or remove it? Let's keep it but users array takes precedence in logic
+                changed = true;
+            } else {
+                // Fallback if completely broken
+                const adminUser: User = {
+                    id: randomUUID(),
+                    username: 'admin',
+                    passwordHash: bcrypt.hashSync('password', 10),
+                    role: 'admin',
+                    allowedDomains: ['*'],
+                    apiKey: randomUUID()
+                };
+                current.users = [adminUser];
+                changed = true;
+            }
+        }
+
+        if (!current.invites) {
+            current.invites = [];
+            changed = true;
+        }
+
+        if (changed) {
             fs.writeFileSync(SETTINGS_FILE, JSON.stringify(current, null, 2));
         }
     } catch {
@@ -86,11 +156,8 @@ export function getSettings(): Settings {
         console.error("Failed to load settings from " + SETTINGS_FILE, error);
         return {
             allowedDomains: [],
-            auth: {
-                username: 'admin',
-                passwordHash: '$2a$10$X7.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1', // Invalid hash to prevent login
-                apiKey: ''
-            }
+            users: [],
+            invites: []
         };
     }
 }

@@ -6,5 +6,47 @@
     "username": "admin",
     "passwordHash": "$2b$10$pI1zshG3UwnInM0SqEpAneXhuU4n1D1ECiVtNoG8ZknKSxTa79kVK",
     "apiKey": "d7a3519e-7476-4519-b83d-d40e0c4128e7"
-  }
+  },
+  "users": [
+    {
+      "id": "605f3b04-ec40-45a6-82f9-f5c7a9001440",
+      "username": "admin",
+      "passwordHash": "$2b$10$pI1zshG3UwnInM0SqEpAneXhuU4n1D1ECiVtNoG8ZknKSxTa79kVK",
+      "role": "admin",
+      "allowedDomains": [
+        "*"
+      ],
+      "apiKey": "d7a3519e-7476-4519-b83d-d40e0c4128e7"
+    },
+    {
+      "id": "8f18f560-41e7-4af6-bbe1-255061aab22f",
+      "username": "dave",
+      "passwordHash": "$2b$10$fCAM4hzOuRHRuWEXTV8HiuDQVp/nIs/sWFfgm0srTSlg04CQQWNOi",
+      "role": "user",
+      "allowedDomains": [
+        "*"
+      ],
+      "apiKey": "74a6e5c5-c4e3-4d14-bcef-e07d3b8b8f5e"
+    }
+  ],
+  "invites": [
+    {
+      "code": "f16a4a6c3281bc2d98e416e83d63e574",
+      "role": "user",
+      "allowedDomains": [
+        "*"
+      ],
+      "used": true,
+      "expiresAt": 1769514826926
+    },
+    {
+      "code": "85710f02ba3d2db33eb6c606f0910c43",
+      "role": "user",
+      "allowedDomains": [
+        "*"
+      ],
+      "used": false,
+      "expiresAt": 1769516552846
+    }
+  ]
 }

@@ -1,5 +1,5 @@
 [Unit]
-Description=MailTrap Local Service
+Description=MailTrap Service
 After=network.target
 
 [Service]

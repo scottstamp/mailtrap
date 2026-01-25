@@ -39,14 +39,14 @@ export default function LoginPage() {
                     <div className="mx-auto mb-4 h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
                         <Lock className="h-6 w-6 text-primary" />
                     </div>
-                    <CardTitle>MailTrap Local Login</CardTitle>
+                    <CardTitle>MailTrap Login</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <form onSubmit={handleLogin} className="space-y-4">
                         <div className="space-y-2">
                             <Input
                                 type="text"
-                                placeholder="Username (default: admin)"
+                                placeholder="Username / Email"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                             />
@@ -54,10 +54,11 @@ export default function LoginPage() {
                         <div className="space-y-2">
                             <Input
                                 type="password"
-                                placeholder="Password (default: password)"
+                                placeholder="Password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
+
                         </div>
                         {error && <p className="text-sm text-red-500">{error}</p>}
                         <Button type="submit" className="w-full">

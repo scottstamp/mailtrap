@@ -6,9 +6,8 @@ import { cookies } from 'next/headers';
 export async function POST(request: NextRequest) {
     try {
         const { username, password } = await request.json();
-        const settings = getSettings();
 
-        if (username === settings.auth.username && verifyPassword(password)) {
+        if (verifyPassword(username, password)) {
             const cookieStore = await cookies();
             cookieStore.set(SESSION_COOKIE_NAME, username, {
                 httpOnly: true,

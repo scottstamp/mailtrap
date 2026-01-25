@@ -18,13 +18,18 @@ if (!fs_1.default.existsSync(STORAGE_FILE)) {
     fs_1.default.writeFileSync(STORAGE_FILE, JSON.stringify([]));
 }
 if (!fs_1.default.existsSync(SETTINGS_FILE)) {
+    const adminUser = {
+        id: (0, crypto_1.randomUUID)(),
+        username: 'admin',
+        passwordHash: bcryptjs_1.default.hashSync('password', 10),
+        role: 'admin',
+        allowedDomains: ['*'],
+        apiKey: (0, crypto_1.randomUUID)()
+    };
     const defaultSettings = {
         allowedDomains: [],
-        auth: {
-            username: 'admin',
-            passwordHash: bcryptjs_1.default.hashSync('password', 10),
-            apiKey: (0, crypto_1.randomUUID)(),
-        }
+        users: [adminUser],
+        invites: []
     };
     fs_1.default.writeFileSync(SETTINGS_FILE, JSON.stringify(defaultSettings, null, 2));
 }
@@ -32,12 +37,41 @@ else {
     // Migration for existing settings file
     try {
         const current = JSON.parse(fs_1.default.readFileSync(SETTINGS_FILE, 'utf-8'));
-        if (!current.auth) {
-            current.auth = {
-                username: 'admin',
-                passwordHash: bcryptjs_1.default.hashSync('password', 10),
-                apiKey: (0, crypto_1.randomUUID)(),
-            };
+        let changed = false;
+        // Migrate legacy auth to users array if users doesn't exist
+        if (!current.users || current.users.length === 0) {
+            if (current.auth) {
+                const adminUser = {
+                    id: (0, crypto_1.randomUUID)(),
+                    username: current.auth.username || 'admin',
+                    passwordHash: current.auth.passwordHash || bcryptjs_1.default.hashSync('password', 10),
+                    role: 'admin',
+                    allowedDomains: ['*'],
+                    apiKey: current.auth.apiKey || (0, crypto_1.randomUUID)()
+                };
+                current.users = [adminUser];
+                // Keep auth for safety or remove it? Let's keep it but users array takes precedence in logic
+                changed = true;
+            }
+            else {
+                // Fallback if completely broken
+                const adminUser = {
+                    id: (0, crypto_1.randomUUID)(),
+                    username: 'admin',
+                    passwordHash: bcryptjs_1.default.hashSync('password', 10),
+                    role: 'admin',
+                    allowedDomains: ['*'],
+                    apiKey: (0, crypto_1.randomUUID)()
+                };
+                current.users = [adminUser];
+                changed = true;
+            }
+        }
+        if (!current.invites) {
+            current.invites = [];
+            changed = true;
+        }
+        if (changed) {
             fs_1.default.writeFileSync(SETTINGS_FILE, JSON.stringify(current, null, 2));
         }
     }
@@ -69,11 +103,8 @@ function getSettings() {
         console.error("Failed to load settings from " + SETTINGS_FILE, error);
         return {
             allowedDomains: [],
-            auth: {
-                username: 'admin',
-                passwordHash: '$2a$10$X7.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1', // Invalid hash to prevent login
-                apiKey: ''
-            }
+            users: [],
+            invites: []
         };
     }
 }

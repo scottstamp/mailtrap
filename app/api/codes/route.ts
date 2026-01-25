@@ -1,14 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getEmails } from '@/lib/store';
 import { htmlToText } from 'html-to-text';
-import { isAuthenticated } from '@/lib/auth';
+import { getCurrentUser } from '@/lib/auth';
 
 export async function GET(request: NextRequest) {
-    if (!await isAuthenticated(request)) {
+    const user = await getCurrentUser(request);
+    if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const emails = getEmails();
+    let emails = getEmails();
+
+    // Filter based on user allowed domains
+    if (user.role !== 'admin' && !user.allowedDomains.includes('*')) {
+        emails = emails.filter(email => {
+            return email.to.some(recipient => {
+                const domain = recipient.address.split('@')[1]?.toLowerCase();
+                return domain && user.allowedDomains.includes(domain);
+            });
+        });
+    }
+
     const regex = /(\d\d\d-\d\d\d\d-\d\d\d)/g;
     const matches: any[] = [];
 
