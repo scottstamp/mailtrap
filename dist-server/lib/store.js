@@ -7,78 +7,87 @@ exports.getEmails = getEmails;
 exports.saveEmail = saveEmail;
 exports.getSettings = getSettings;
 exports.saveSettings = saveSettings;
+exports.getSessions = getSessions;
+exports.saveSession = saveSession;
+exports.deleteSession = deleteSession;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const crypto_1 = require("crypto");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const STORAGE_FILE = path_1.default.join(process.cwd(), 'emails.json');
 const SETTINGS_FILE = path_1.default.join(process.cwd(), 'settings.json');
+const SESSIONS_FILE = path_1.default.join(process.cwd(), 'sessions.json');
 // Initialize files if not exist
 if (!fs_1.default.existsSync(STORAGE_FILE)) {
     fs_1.default.writeFileSync(STORAGE_FILE, JSON.stringify([]));
 }
-if (!fs_1.default.existsSync(SETTINGS_FILE)) {
-    const adminUser = {
-        id: (0, crypto_1.randomUUID)(),
-        username: 'admin',
-        passwordHash: bcryptjs_1.default.hashSync('password', 10),
-        role: 'admin',
-        allowedDomains: ['*'],
-        apiKey: (0, crypto_1.randomUUID)()
-    };
-    const defaultSettings = {
-        allowedDomains: [],
-        users: [adminUser],
-        invites: []
-    };
-    fs_1.default.writeFileSync(SETTINGS_FILE, JSON.stringify(defaultSettings, null, 2));
+if (!fs_1.default.existsSync(SESSIONS_FILE)) {
+    fs_1.default.writeFileSync(SESSIONS_FILE, JSON.stringify([]));
 }
-else {
-    // Migration for existing settings file
-    try {
-        const current = JSON.parse(fs_1.default.readFileSync(SETTINGS_FILE, 'utf-8'));
-        let changed = false;
-        // Migrate legacy auth to users array if users doesn't exist
-        if (!current.users || current.users.length === 0) {
-            if (current.auth) {
-                const adminUser = {
-                    id: (0, crypto_1.randomUUID)(),
-                    username: current.auth.username || 'admin',
-                    passwordHash: current.auth.passwordHash || bcryptjs_1.default.hashSync('password', 10),
-                    role: 'admin',
-                    allowedDomains: ['*'],
-                    apiKey: current.auth.apiKey || (0, crypto_1.randomUUID)()
-                };
-                current.users = [adminUser];
-                // Keep auth for safety or remove it? Let's keep it but users array takes precedence in logic
+function initializeSettings() {
+    if (!fs_1.default.existsSync(SETTINGS_FILE)) {
+        const adminUser = {
+            id: (0, crypto_1.randomUUID)(),
+            username: 'admin',
+            passwordHash: bcryptjs_1.default.hashSync('password', 10),
+            role: 'admin',
+            allowedDomains: ['*'],
+            apiKey: (0, crypto_1.randomUUID)()
+        };
+        const defaultSettings = {
+            allowedDomains: [],
+            users: [adminUser],
+            invites: []
+        };
+        fs_1.default.writeFileSync(SETTINGS_FILE, JSON.stringify(defaultSettings, null, 2));
+    }
+    else {
+        // Migration for existing settings file
+        try {
+            const current = JSON.parse(fs_1.default.readFileSync(SETTINGS_FILE, 'utf-8'));
+            let changed = false;
+            // Migrate legacy auth to users array if users doesn't exist
+            if (!current.users || current.users.length === 0) {
+                if (current.auth) {
+                    const adminUser = {
+                        id: (0, crypto_1.randomUUID)(),
+                        username: current.auth.username || 'admin',
+                        passwordHash: current.auth.passwordHash || bcryptjs_1.default.hashSync('password', 10),
+                        role: 'admin',
+                        allowedDomains: ['*'],
+                        apiKey: current.auth.apiKey || (0, crypto_1.randomUUID)()
+                    };
+                    current.users = [adminUser];
+                    changed = true;
+                }
+                else {
+                    // Fallback if completely broken
+                    const adminUser = {
+                        id: (0, crypto_1.randomUUID)(),
+                        username: 'admin',
+                        passwordHash: bcryptjs_1.default.hashSync('password', 10),
+                        role: 'admin',
+                        allowedDomains: ['*'],
+                        apiKey: (0, crypto_1.randomUUID)()
+                    };
+                    current.users = [adminUser];
+                    changed = true;
+                }
+            }
+            if (!current.invites) {
+                current.invites = [];
                 changed = true;
             }
-            else {
-                // Fallback if completely broken
-                const adminUser = {
-                    id: (0, crypto_1.randomUUID)(),
-                    username: 'admin',
-                    passwordHash: bcryptjs_1.default.hashSync('password', 10),
-                    role: 'admin',
-                    allowedDomains: ['*'],
-                    apiKey: (0, crypto_1.randomUUID)()
-                };
-                current.users = [adminUser];
-                changed = true;
+            if (changed) {
+                fs_1.default.writeFileSync(SETTINGS_FILE, JSON.stringify(current, null, 2));
             }
         }
-        if (!current.invites) {
-            current.invites = [];
-            changed = true;
+        catch (_a) {
+            // failed to read, overwrite or ignore
         }
-        if (changed) {
-            fs_1.default.writeFileSync(SETTINGS_FILE, JSON.stringify(current, null, 2));
-        }
-    }
-    catch (_a) {
-        // failed to read, overwrite or ignore
     }
 }
+initializeSettings();
 function getEmails() {
     try {
         const data = fs_1.default.readFileSync(STORAGE_FILE, 'utf-8');
@@ -110,4 +119,25 @@ function getSettings() {
 }
 function saveSettings(settings) {
     fs_1.default.writeFileSync(SETTINGS_FILE, JSON.stringify(settings, null, 2));
+}
+function getSessions() {
+    try {
+        const data = fs_1.default.readFileSync(SESSIONS_FILE, 'utf-8');
+        return JSON.parse(data);
+    }
+    catch (error) {
+        return [];
+    }
+}
+function saveSession(session) {
+    const sessions = getSessions();
+    sessions.push(session);
+    // Cleanup expired sessions while we are at it
+    const active = sessions.filter(s => s.expiresAt > Date.now());
+    fs_1.default.writeFileSync(SESSIONS_FILE, JSON.stringify(active, null, 2));
+}
+function deleteSession(token) {
+    const sessions = getSessions();
+    const filtered = sessions.filter(s => s.token !== token);
+    fs_1.default.writeFileSync(SESSIONS_FILE, JSON.stringify(filtered, null, 2));
 }

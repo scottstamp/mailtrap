@@ -27,10 +27,13 @@ async function getCurrentUser(req) {
     const cookieStore = await (0, headers_1.cookies)();
     const sessionCookie = cookieStore.get(constants_1.SESSION_COOKIE_NAME);
     if (sessionCookie && sessionCookie.value) {
-        // In a real app we'd look up a session ID. Here valid value is just username.
-        const user = settings.users.find(u => u.username === sessionCookie.value);
-        if (user)
-            return user;
+        const sessions = (0, store_1.getSessions)();
+        const activeSession = sessions.find(s => s.token === sessionCookie.value && s.expiresAt > Date.now());
+        if (activeSession) {
+            const user = settings.users.find(u => u.id === activeSession.userId);
+            if (user)
+                return user;
+        }
     }
     return null;
 }

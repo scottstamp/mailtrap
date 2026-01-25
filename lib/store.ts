@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs';
 
 const STORAGE_FILE = path.join(process.cwd(), 'emails.json');
 const SETTINGS_FILE = path.join(process.cwd(), 'settings.json');
+const SESSIONS_FILE = path.join(process.cwd(), 'sessions.json');
 
 export interface Email {
     id: string;
@@ -64,73 +65,86 @@ export interface Settings {
     };
 }
 
+export interface Session {
+    token: string;
+    userId: string;
+    expiresAt: number;
+}
+
 // Initialize files if not exist
 if (!fs.existsSync(STORAGE_FILE)) {
     fs.writeFileSync(STORAGE_FILE, JSON.stringify([]));
 }
-if (!fs.existsSync(SETTINGS_FILE)) {
-    const adminUser: User = {
-        id: randomUUID(),
-        username: 'admin',
-        passwordHash: bcrypt.hashSync('password', 10),
-        role: 'admin',
-        allowedDomains: ['*'],
-        apiKey: randomUUID()
-    };
+if (!fs.existsSync(SESSIONS_FILE)) {
+    fs.writeFileSync(SESSIONS_FILE, JSON.stringify([]));
+}
 
-    const defaultSettings: Settings = {
-        allowedDomains: [],
-        users: [adminUser],
-        invites: []
-    };
-    fs.writeFileSync(SETTINGS_FILE, JSON.stringify(defaultSettings, null, 2));
-} else {
-    // Migration for existing settings file
-    try {
-        const current = JSON.parse(fs.readFileSync(SETTINGS_FILE, 'utf-8'));
-        let changed = false;
+function initializeSettings() {
+    if (!fs.existsSync(SETTINGS_FILE)) {
+        const adminUser: User = {
+            id: randomUUID(),
+            username: 'admin',
+            passwordHash: bcrypt.hashSync('password', 10),
+            role: 'admin',
+            allowedDomains: ['*'],
+            apiKey: randomUUID()
+        };
 
-        // Migrate legacy auth to users array if users doesn't exist
-        if (!current.users || current.users.length === 0) {
-            if (current.auth) {
-                const adminUser: User = {
-                    id: randomUUID(),
-                    username: current.auth.username || 'admin',
-                    passwordHash: current.auth.passwordHash || bcrypt.hashSync('password', 10),
-                    role: 'admin',
-                    allowedDomains: ['*'],
-                    apiKey: current.auth.apiKey || randomUUID()
-                };
-                current.users = [adminUser];
-                // Keep auth for safety or remove it? Let's keep it but users array takes precedence in logic
-                changed = true;
-            } else {
-                // Fallback if completely broken
-                const adminUser: User = {
-                    id: randomUUID(),
-                    username: 'admin',
-                    passwordHash: bcrypt.hashSync('password', 10),
-                    role: 'admin',
-                    allowedDomains: ['*'],
-                    apiKey: randomUUID()
-                };
-                current.users = [adminUser];
+        const defaultSettings: Settings = {
+            allowedDomains: [],
+            users: [adminUser],
+            invites: []
+        };
+        fs.writeFileSync(SETTINGS_FILE, JSON.stringify(defaultSettings, null, 2));
+    } else {
+        // Migration for existing settings file
+        try {
+            const current = JSON.parse(fs.readFileSync(SETTINGS_FILE, 'utf-8'));
+            let changed = false;
+
+            // Migrate legacy auth to users array if users doesn't exist
+            if (!current.users || current.users.length === 0) {
+                if (current.auth) {
+                    const adminUser: User = {
+                        id: randomUUID(),
+                        username: current.auth.username || 'admin',
+                        passwordHash: current.auth.passwordHash || bcrypt.hashSync('password', 10),
+                        role: 'admin',
+                        allowedDomains: ['*'],
+                        apiKey: current.auth.apiKey || randomUUID()
+                    };
+                    current.users = [adminUser];
+                    changed = true;
+                } else {
+                    // Fallback if completely broken
+                    const adminUser: User = {
+                        id: randomUUID(),
+                        username: 'admin',
+                        passwordHash: bcrypt.hashSync('password', 10),
+                        role: 'admin',
+                        allowedDomains: ['*'],
+                        apiKey: randomUUID()
+                    };
+                    current.users = [adminUser];
+                    changed = true;
+                }
+            }
+
+            if (!current.invites) {
+                current.invites = [];
                 changed = true;
             }
-        }
 
-        if (!current.invites) {
-            current.invites = [];
-            changed = true;
+            if (changed) {
+                fs.writeFileSync(SETTINGS_FILE, JSON.stringify(current, null, 2));
+            }
+        } catch {
+            // failed to read, overwrite or ignore
         }
-
-        if (changed) {
-            fs.writeFileSync(SETTINGS_FILE, JSON.stringify(current, null, 2));
-        }
-    } catch {
-        // failed to read, overwrite or ignore
     }
 }
+
+initializeSettings();
 
 export function getEmails(): Email[] {
     try {
@@ -164,4 +178,27 @@ export function getSettings(): Settings {
 
 export function saveSettings(settings: Settings) {
     fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settings, null, 2));
+}
+
+export function getSessions(): Session[] {
+    try {
+        const data = fs.readFileSync(SESSIONS_FILE, 'utf-8');
+        return JSON.parse(data);
+    } catch (error) {
+        return [];
+    }
+}
+
+export function saveSession(session: Session) {
+    const sessions = getSessions();
+    sessions.push(session);
+    // Cleanup expired sessions while we are at it
+    const active = sessions.filter(s => s.expiresAt > Date.now());
+    fs.writeFileSync(SESSIONS_FILE, JSON.stringify(active, null, 2));
+}
+
+export function deleteSession(token: string) {
+    const sessions = getSessions();
+    const filtered = sessions.filter(s => s.token !== token);
+    fs.writeFileSync(SESSIONS_FILE, JSON.stringify(filtered, null, 2));
 }

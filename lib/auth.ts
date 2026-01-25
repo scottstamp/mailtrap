@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { getSettings, User } from './store';
+import { getSettings, getSessions, User } from './store';
 import bcrypt from 'bcryptjs';
 import { cookies } from 'next/headers';
 import { SESSION_COOKIE_NAME } from './constants';
@@ -22,9 +22,13 @@ export async function getCurrentUser(req: NextRequest): Promise<User | null> {
     const sessionCookie = cookieStore.get(SESSION_COOKIE_NAME);
 
     if (sessionCookie && sessionCookie.value) {
-        // In a real app we'd look up a session ID. Here valid value is just username.
-        const user = settings.users.find(u => u.username === sessionCookie.value);
-        if (user) return user;
+        const sessions = getSessions();
+        const activeSession = sessions.find(s => s.token === sessionCookie.value && s.expiresAt > Date.now());
+
+        if (activeSession) {
+            const user = settings.users.find(u => u.id === activeSession.userId);
+            if (user) return user;
+        }
     }
 
     return null;
