@@ -1,0 +1,25 @@
+[Unit]
+Description=MailTrap Local Service
+After=network.target
+
+[Service]
+# Service must run as root to bind to port 25 (SMTP)
+User=root
+Group=root
+
+# CHANGE THIS: Path to your application directory
+WorkingDirectory=/opt/mailtrap
+
+# ExecStart needs absolute paths. 
+# You might need to check where npm is located with `which npm`
+ExecStart=/usr/bin/npm run start:all
+
+# Restart policy
+Restart=always
+RestartSec=10
+
+# Environment variables
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target
