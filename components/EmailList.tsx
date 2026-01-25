@@ -81,11 +81,15 @@ function EmailItem({ email }: { email: Email }) {
                 .replace(/<\/div>/gi, "\n");
 
             temp.innerHTML = htmlWithNewlines;
-            setTextDisplay((temp.textContent || temp.innerText || "").trim());
+            const text = (temp.textContent || temp.innerText || "").trim();
+            // Remove consecutive blank lines (more than 2 newlines -> 2 newlines)
+            setTextDisplay(text.replace(/\n\s*\n\s*\n/g, '\n\n'));
         } else {
-            setTextDisplay(email.text);
+            setTextDisplay(email.text ? email.text.replace(/\n\s*\n\s*\n/g, '\n\n') : "");
         }
     }, [email.html, email.text]);
+
+    const [showHtml, setShowHtml] = useState(false);
 
     return (
         <Collapsible open={isOpen} onOpenChange={setIsOpen} className="border rounded-md bg-card">
@@ -139,12 +143,18 @@ function EmailItem({ email }: { email: Email }) {
                     </div>
 
                     <div className="space-y-2">
-                        <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">HTML Source</h3>
-                        <ScrollArea className="h-[300px] w-full rounded-md border p-4 bg-muted/50">
-                            <pre className="text-xs font-mono break-all whitespace-pre-wrap text-primary/80">
-                                {email.html || "<no-html-content />"}
-                            </pre>
-                        </ScrollArea>
+                        <div className="flex items-center gap-2 cursor-pointer select-none" onClick={() => setShowHtml(!showHtml)}>
+                            {showHtml ? <ChevronDown className="w-4 h-4 text-muted-foreground" /> : <ChevronRight className="w-4 h-4 text-muted-foreground" />}
+                            <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">HTML Source</h3>
+                        </div>
+
+                        {showHtml && (
+                            <ScrollArea className="h-[300px] w-full rounded-md border p-4 bg-muted/50">
+                                <pre className="text-xs font-mono break-all whitespace-pre-wrap text-primary/80">
+                                    {email.html || "<no-html-content />"}
+                                </pre>
+                            </ScrollArea>
+                        )}
                     </div>
                 </div>
             </CollapsibleContent>
