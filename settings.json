@@ -1,0 +1,10 @@
+{
+  "allowedDomains": [
+    "cntct.ca"
+  ],
+  "auth": {
+    "username": "admin",
+    "passwordHash": "$2b$10$pI1zshG3UwnInM0SqEpAneXhuU4n1D1ECiVtNoG8ZknKSxTa79kVK",
+    "apiKey": "d7a3519e-7476-4519-b83d-d40e0c4128e7"
+  }
+}

@@ -1,0 +1,70 @@
+[
+  {
+    "id": "bf6eb88e-fbc4-4f25-9bfd-ed9a0e1b2c45",
+    "from": {
+      "address": "test@example.com",
+      "name": "Test User"
+    },
+    "to": [
+      {
+        "address": "admin@cntct.ca",
+        "name": ""
+      }
+    ],
+    "subject": "Hello from Localhost ✔",
+    "text": "Hello world?\nThis is a test email sent to localhost:25.Placeholder\n[https://via.placeholder.com/150]",
+    "html": "<b>Hello world?</b><br>This is a test email sent to localhost:25.<img src=\"https://via.placeholder.com/150\" alt=\"Placeholder\">",
+    "date": "2026-01-25T10:22:11.989Z"
+  },
+  {
+    "id": "fb573f52-45ec-400a-91a6-75ce7becf738",
+    "from": {
+      "address": "test@example.com",
+      "name": "Test User"
+    },
+    "to": [
+      {
+        "address": "admin@cntct.ca",
+        "name": ""
+      }
+    ],
+    "subject": "Hello from Localhost ✔",
+    "text": "Hello world?\nThis is a test email sent to localhost:25.Placeholder\n[https://via.placeholder.com/150]",
+    "html": "<b>Hello world?</b><br>This is a test email sent to localhost:25.<img src=\"https://via.placeholder.com/150\" alt=\"Placeholder\">",
+    "date": "2026-01-25T09:55:35.879Z"
+  },
+  {
+    "id": "0691cef1-579c-48a4-86bd-295d3acbb7ab",
+    "from": {
+      "address": "test@example.com",
+      "name": "Test User"
+    },
+    "to": [
+      {
+        "address": "admin@local.test",
+        "name": ""
+      }
+    ],
+    "subject": "Hello from Localhost ✔",
+    "text": "Hello world?\nThis is a test email sent to localhost:25.Placeholder\n[https://via.placeholder.com/150]",
+    "html": "<b>Hello world?</b><br>This is a test email sent to localhost:25.<img src=\"https://via.placeholder.com/150\" alt=\"Placeholder\">",
+    "date": "2026-01-25T09:54:42.705Z"
+  },
+  {
+    "id": "935935b9-7e5a-41fc-b92f-394c5c96b937",
+    "from": {
+      "address": "test@example.com",
+      "name": "Test User"
+    },
+    "to": [
+      {
+        "address": "admin@local.test",
+        "name": ""
+      }
+    ],
+    "subject": "Hello from Localhost ✔",
+    "text": "Hello world?",
+    "html": "<b>Hello world?</b><br>This is a test email sent to localhost:25.",
+    "date": "2026-01-25T09:50:29.215Z"
+  }
+]
