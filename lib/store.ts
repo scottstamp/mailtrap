@@ -83,11 +83,12 @@ export function getSettings(): Settings {
         const data = fs.readFileSync(SETTINGS_FILE, 'utf-8');
         return JSON.parse(data);
     } catch (error) {
+        console.error("Failed to load settings from " + SETTINGS_FILE, error);
         return {
             allowedDomains: [],
             auth: {
                 username: 'admin',
-                passwordHash: '', // Should not happen if init worked
+                passwordHash: '$2a$10$X7.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1', // Invalid hash to prevent login
                 apiKey: ''
             }
         };
