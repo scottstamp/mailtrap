@@ -1,8 +1,13 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { SettingsDialog } from "@/components/SettingsDialog";
 import { Button } from "@/components/ui/button";
 
 export function Header() {
+    const pathname = usePathname();
+
     return (
         <header className="border-b sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -28,10 +33,10 @@ export function Header() {
 
                     <nav className="flex items-center gap-1">
                         <Link href="/">
-                            <Button variant="ghost" size="sm">OTP Codes</Button>
+                            <Button variant={pathname === "/" ? "secondary" : "ghost"} size="sm">OTP Codes</Button>
                         </Link>
                         <Link href="/emails">
-                            <Button variant="ghost" size="sm">Emails</Button>
+                            <Button variant={pathname === "/emails" ? "secondary" : "ghost"} size="sm">Emails</Button>
                         </Link>
                     </nav>
                 </div>

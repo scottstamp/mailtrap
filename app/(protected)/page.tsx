@@ -30,17 +30,14 @@ export default function CodesPage() {
     }
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-2">
             <div className="flex justify-between items-center mb-2">
-                <h2 className="text-2xl font-bold tracking-tight">One-Time Codes</h2>
-                <div className="flex items-center gap-4">
-                    <div className="text-xs text-muted-foreground">
-                        {lastRefreshed && `Last updated: ${lastRefreshed.toLocaleTimeString()}`}
-                    </div>
-                    <Button size="sm" variant="ghost" onClick={() => mutate()}>
-                        <RefreshCw className="w-4 h-4 mr-2" /> Refresh
-                    </Button>
+                <div className="text-xs text-muted-foreground">
+                    {lastRefreshed && `Last updated: ${lastRefreshed.toLocaleTimeString()}`}
                 </div>
+                <Button size="sm" variant="ghost" onClick={() => mutate()}>
+                    <RefreshCw className="w-4 h-4 mr-2" /> Refresh
+                </Button>
             </div>
 
             {codes.length === 0 ? (
