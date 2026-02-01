@@ -31,11 +31,11 @@ export async function GET(request: NextRequest) {
         let match;
         while ((match = regex.exec(textToSearch)) !== null) {
             matches.push({
-                id: email.id + '-' + match.index, // Unique-ish ID
+                // id: email.id + '-' + match.index, // Unique-ish ID
                 code: match[0],
                 email: email.to[0]?.address || 'Unknown', // Primary recipient
-                date: email.date,
-                subject: email.subject
+                // date: email.date,
+                // subject: email.subject
             });
         }
     }
@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
     // Sort by date desc
     matches.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-    return NextResponse.json(matches.slice(0, 50), {
+    return NextResponse.json(matches.slice(0, 3), {
         headers: {
             'Cache-Control': 'no-store, max-age=0',
         },
