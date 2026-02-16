@@ -51,27 +51,28 @@ app.prepare().then(() => {
                     return callback(new Error('Failed to parse email'));
                 }
 
-                const email = {
-                    id: randomUUID(),
-                    from: {
-                        address: parsed.from?.value[0]?.address || '',
-                        name: parsed.from?.value[0]?.name || '',
-                    },
-                    to: Array.isArray(parsed.to)
-                        ? parsed.to.map((addr: any) => ({
-                            address: addr.value[0]?.address || '',
-                            name: addr.value[0]?.name || ''
-                        }))
-                        : parsed.to
-                            ? [{ address: (parsed.to as any).value[0]?.address || '', name: (parsed.to as any).value[0]?.name || '' }]
-                            : [],
-                    subject: parsed.subject || '(No Subject)',
-                    text: (parsed.html ? htmlToText(parsed.html) : parsed.text) || '',
-                    html: parsed.html || parsed.textAsHtml || '',
-                    date: new Date().toISOString(),
-                };
+                var subject = parsed.subject || '';
+                if (subject !== 'You have a friend request in Habbo') {
+                    const email = {
+                        id: randomUUID(),
+                        from: {
+                            address: parsed.from?.value[0]?.address || '',
+                            name: parsed.from?.value[0]?.name || '',
+                        },
+                        to: Array.isArray(parsed.to)
+                            ? parsed.to.map((addr: any) => ({
+                                address: addr.value[0]?.address || '',
+                                name: addr.value[0]?.name || ''
+                            }))
+                            : parsed.to
+                                ? [{ address: (parsed.to as any).value[0]?.address || '', name: (parsed.to as any).value[0]?.name || '' }]
+                                : [],
+                        subject: parsed.subject || '(No Subject)',
+                        text: (parsed.html ? htmlToText(parsed.html) : parsed.text) || '',
+                        html: parsed.html || parsed.textAsHtml || '',
+                        date: new Date().toISOString(),
+                    };
 
-                if (email.subject !== 'You have a friend request in Habbo') {
                     saveEmail(email);
                 }
 
