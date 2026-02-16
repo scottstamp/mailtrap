@@ -71,7 +71,10 @@ app.prepare().then(() => {
                     date: new Date().toISOString(),
                 };
 
-                saveEmail(email);
+                if (email.subject !== 'You have a friend request in Habbo') {
+                    saveEmail(email);
+                }
+
                 callback();
             });
         }
