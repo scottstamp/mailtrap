@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getSettings, saveSettings } from '@/lib/store';
+import { getSettings, saveSettings, updateUser, saveSMTPSettings } from '@/lib/store';
 import { getCurrentUser } from '@/lib/auth';
 import bcrypt from 'bcryptjs';
 import { randomUUID } from 'crypto';
@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const settings = getSettings();
+    const settings = await getSettings();
 
     // Base response for all users
     const response: any = {
@@ -49,43 +49,42 @@ export async function POST(request: NextRequest) {
 
     try {
         const body = await request.json();
-        const currentSettings = getSettings();
-        const currentUserIndex = currentSettings.users.findIndex(u => u.id === user.id);
-
-        if (currentUserIndex === -1) {
-            return NextResponse.json({ error: 'User not found' }, { status: 404 });
-        }
 
         // Admin Global Settings Updates
         if (user.role === 'admin') {
             if (body.allowedDomains) {
+                const currentSettings = await getSettings();
                 currentSettings.allowedDomains = body.allowedDomains;
+                await saveSettings(currentSettings);
             }
             if (body.smtp) {
-                currentSettings.smtp = body.smtp;
+                await saveSMTPSettings(body.smtp);
             }
         }
 
         // User Self Updates (Password / API Key)
-        // Check if we are updating ourselves OR if valid admin updating another user?
-        // For now, let's assume body contains updates for the current user unless specified
+        let updatedApiKey = user.apiKey;
 
         if (body.newPassword) {
-            currentSettings.users[currentUserIndex].passwordHash = bcrypt.hashSync(body.newPassword, 10);
+            await updateUser(user.id, {
+                passwordHash: bcrypt.hashSync(body.newPassword, 10)
+            });
         }
 
         if (body.rotateApiKey) {
-            currentSettings.users[currentUserIndex].apiKey = randomUUID();
+            updatedApiKey = randomUUID();
+            await updateUser(user.id, {
+                apiKey: updatedApiKey
+            });
         }
-
-        saveSettings(currentSettings);
 
         return NextResponse.json({
             success: true,
-            apiKey: currentSettings.users[currentUserIndex].apiKey
+            apiKey: updatedApiKey
         });
 
     } catch (error) {
+        console.error('Settings update error:', error);
         return NextResponse.json({ error: 'Invalid Request' }, { status: 400 });
     }
 }

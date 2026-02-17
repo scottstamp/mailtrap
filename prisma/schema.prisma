@@ -1,0 +1,108 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Email {
+  id        String   @id @default(uuid())
+  fromName  String
+  fromEmail String
+  to        EmailRecipient[]
+  subject   String
+  text      String
+  html      String
+  date      DateTime
+  createdAt DateTime @default(now())
+
+  @@index([date])
+}
+
+model EmailRecipient {
+  id        String @id @default(uuid())
+  address   String
+  name      String
+  emailId   String
+  emailRef  Email  @relation(fields: [emailId], references: [id], onDelete: Cascade)
+
+  @@index([emailId])
+}
+
+model User {
+  id             String   @id @default(uuid())
+  username       String   @unique
+  passwordHash   String
+  role           String   // 'admin' | 'user'
+  apiKey         String   @unique
+  resetToken     String?
+  resetTokenExpiry DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // User domains for access control
+  domains UserDomain[]
+}
+
+model UserDomain {
+  id     String @id @default(uuid())
+  domain String
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, domain])
+}
+
+model Invite {
+  id          String   @id @default(uuid())
+  code        String   @unique
+  role        String   // 'admin' | 'user'
+  used        Boolean  @default(false)
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+
+  // Invite domains for access control
+  domains InviteDomain[]
+}
+
+model InviteDomain {
+  id       String @id @default(uuid())
+  domain   String
+  inviteId String
+  invite   Invite @relation(fields: [inviteId], references: [id], onDelete: Cascade)
+
+  @@unique([inviteId, domain])
+}
+
+model SMTPSettings {
+  id       String  @id @default(uuid())
+  host     String
+  port     Int
+  user     String
+  pass     String
+  secure   Boolean
+  from     String
+  enabled  Boolean @default(false)
+  updatedAt DateTime @updatedAt
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([token])
+  @@index([expiresAt])
+}
+
+model AppSettings {
+  id             String   @id @default(uuid())
+  key            String   @unique
+  value          String   // JSON string for complex values
+  updatedAt      DateTime @updatedAt
+}

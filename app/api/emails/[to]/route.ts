@@ -13,7 +13,7 @@ export async function GET(
     const { to } = await params;
     const decodedTo = decodeURIComponent(to).toLowerCase();
 
-    const emails = getEmails().filter(email =>
+    const emails = (await getEmails()).filter(email =>
         email.to.some(recipient => recipient.address.toLowerCase() === decodedTo)
     );
 

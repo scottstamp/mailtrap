@@ -8,8 +8,8 @@ export async function POST(request: NextRequest) {
     try {
         const { username, password } = await request.json();
 
-        if (verifyPassword(username, password)) {
-            const settings = getSettings();
+        if (await verifyPassword(username, password)) {
+            const settings = await getSettings();
             const user = settings.users.find(u => u.username === username);
 
             if (!user) return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
             const token = randomBytes(32).toString('hex');
             const expiresAt = Date.now() + 1000 * 60 * 60 * 24 * 7; // 1 week
 
-            saveSession({
+            await saveSession({
                 token,
                 userId: user.id,
                 expiresAt

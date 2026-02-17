@@ -7,7 +7,7 @@ import { SESSION_COOKIE_NAME } from './constants';
 export { SESSION_COOKIE_NAME };
 
 export async function getCurrentUser(req: NextRequest): Promise<User | null> {
-    const settings = getSettings();
+    const settings = await getSettings();
     if (!settings.users) return null;
 
     // 1. Check API Key Header
@@ -22,7 +22,7 @@ export async function getCurrentUser(req: NextRequest): Promise<User | null> {
     const sessionCookie = cookieStore.get(SESSION_COOKIE_NAME);
 
     if (sessionCookie && sessionCookie.value) {
-        const sessions = getSessions();
+        const sessions = await getSessions();
         const activeSession = sessions.find(s => s.token === sessionCookie.value && s.expiresAt > Date.now());
 
         if (activeSession) {
@@ -39,8 +39,8 @@ export async function isAuthenticated(req: NextRequest): Promise<boolean> {
     return !!user;
 }
 
-export function verifyPassword(username: string, password: string): boolean {
-    const settings = getSettings();
+export async function verifyPassword(username: string, password: string): Promise<boolean> {
+    const settings = await getSettings();
     const user = settings.users.find(u => u.username === username);
     if (!user) return false;
     return bcrypt.compareSync(password, user.passwordHash);

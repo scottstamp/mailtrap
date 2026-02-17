@@ -23,7 +23,7 @@ export async function GET(
 
     try {
         const regex = new RegExp(pattern);
-        const emails = getEmails().filter(email =>
+        const emails = (await getEmails()).filter(email =>
             email.to.some(recipient => recipient.address.toLowerCase() === decodedTo)
         );
 

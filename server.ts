@@ -33,8 +33,8 @@ app.prepare().then(() => {
     // SMTP Server
     const server = new SMTPServer({
         authOptional: true, // Allow without auth
-        onRcptTo(address, session: SMTPServerSession, callback) {
-            const settings = getSettings();
+        async onRcptTo(address, session: SMTPServerSession, callback) {
+            const settings = await getSettings();
             if (settings.allowedDomains && settings.allowedDomains.length > 0) {
                 const email = address.address;
                 const domain = email.split('@')[1];
@@ -45,7 +45,7 @@ app.prepare().then(() => {
             callback(); // Accept
         },
         onData(stream: SMTPServerDataStream, session: SMTPServerSession, callback) {
-            simpleParser(stream, (err, parsed) => {
+            simpleParser(stream, async (err, parsed) => {
                 if (err) {
                     console.error('Failed to parse email', err);
                     return callback(new Error('Failed to parse email'));
@@ -73,7 +73,7 @@ app.prepare().then(() => {
                         date: new Date().toISOString(),
                     };
 
-                    saveEmail(email);
+                    await saveEmail(email);
                 }
 
                 callback();

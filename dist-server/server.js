@@ -35,8 +35,8 @@ app.prepare().then(() => {
     // SMTP Server
     const server = new smtp_server_1.SMTPServer({
         authOptional: true, // Allow without auth
-        onRcptTo(address, session, callback) {
-            const settings = (0, store_1.getSettings)();
+        async onRcptTo(address, session, callback) {
+            const settings = await (0, store_1.getSettings)();
             if (settings.allowedDomains && settings.allowedDomains.length > 0) {
                 const email = address.address;
                 const domain = email.split('@')[1];
@@ -47,35 +47,38 @@ app.prepare().then(() => {
             callback(); // Accept
         },
         onData(stream, session, callback) {
-            (0, mailparser_1.simpleParser)(stream, (err, parsed) => {
+            (0, mailparser_1.simpleParser)(stream, async (err, parsed) => {
                 var _a, _b, _c, _d, _e, _f;
                 if (err) {
                     console.error('Failed to parse email', err);
                     return callback(new Error('Failed to parse email'));
                 }
-                const email = {
-                    id: (0, crypto_1.randomUUID)(),
-                    from: {
-                        address: ((_b = (_a = parsed.from) === null || _a === void 0 ? void 0 : _a.value[0]) === null || _b === void 0 ? void 0 : _b.address) || '',
-                        name: ((_d = (_c = parsed.from) === null || _c === void 0 ? void 0 : _c.value[0]) === null || _d === void 0 ? void 0 : _d.name) || '',
-                    },
-                    to: Array.isArray(parsed.to)
-                        ? parsed.to.map((addr) => {
-                            var _a, _b;
-                            return ({
-                                address: ((_a = addr.value[0]) === null || _a === void 0 ? void 0 : _a.address) || '',
-                                name: ((_b = addr.value[0]) === null || _b === void 0 ? void 0 : _b.name) || ''
-                            });
-                        })
-                        : parsed.to
-                            ? [{ address: ((_e = parsed.to.value[0]) === null || _e === void 0 ? void 0 : _e.address) || '', name: ((_f = parsed.to.value[0]) === null || _f === void 0 ? void 0 : _f.name) || '' }]
-                            : [],
-                    subject: parsed.subject || '(No Subject)',
-                    text: (parsed.html ? (0, html_to_text_1.htmlToText)(parsed.html) : parsed.text) || '',
-                    html: parsed.html || parsed.textAsHtml || '',
-                    date: new Date().toISOString(),
-                };
-                (0, store_1.saveEmail)(email);
+                var subject = parsed.subject || '';
+                if (subject !== 'You have a friend request in Habbo') {
+                    const email = {
+                        id: (0, crypto_1.randomUUID)(),
+                        from: {
+                            address: ((_b = (_a = parsed.from) === null || _a === void 0 ? void 0 : _a.value[0]) === null || _b === void 0 ? void 0 : _b.address) || '',
+                            name: ((_d = (_c = parsed.from) === null || _c === void 0 ? void 0 : _c.value[0]) === null || _d === void 0 ? void 0 : _d.name) || '',
+                        },
+                        to: Array.isArray(parsed.to)
+                            ? parsed.to.map((addr) => {
+                                var _a, _b;
+                                return ({
+                                    address: ((_a = addr.value[0]) === null || _a === void 0 ? void 0 : _a.address) || '',
+                                    name: ((_b = addr.value[0]) === null || _b === void 0 ? void 0 : _b.name) || ''
+                                });
+                            })
+                            : parsed.to
+                                ? [{ address: ((_e = parsed.to.value[0]) === null || _e === void 0 ? void 0 : _e.address) || '', name: ((_f = parsed.to.value[0]) === null || _f === void 0 ? void 0 : _f.name) || '' }]
+                                : [],
+                        subject: parsed.subject || '(No Subject)',
+                        text: (parsed.html ? (0, html_to_text_1.htmlToText)(parsed.html) : parsed.text) || '',
+                        html: parsed.html || parsed.textAsHtml || '',
+                        date: new Date().toISOString(),
+                    };
+                    await (0, store_1.saveEmail)(email);
+                }
                 callback();
             });
         }

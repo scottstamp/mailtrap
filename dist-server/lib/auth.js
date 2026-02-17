@@ -13,7 +13,7 @@ const headers_1 = require("next/headers");
 const constants_1 = require("./constants");
 Object.defineProperty(exports, "SESSION_COOKIE_NAME", { enumerable: true, get: function () { return constants_1.SESSION_COOKIE_NAME; } });
 async function getCurrentUser(req) {
-    const settings = (0, store_1.getSettings)();
+    const settings = await (0, store_1.getSettings)();
     if (!settings.users)
         return null;
     // 1. Check API Key Header
@@ -27,7 +27,7 @@ async function getCurrentUser(req) {
     const cookieStore = await (0, headers_1.cookies)();
     const sessionCookie = cookieStore.get(constants_1.SESSION_COOKIE_NAME);
     if (sessionCookie && sessionCookie.value) {
-        const sessions = (0, store_1.getSessions)();
+        const sessions = await (0, store_1.getSessions)();
         const activeSession = sessions.find(s => s.token === sessionCookie.value && s.expiresAt > Date.now());
         if (activeSession) {
             const user = settings.users.find(u => u.id === activeSession.userId);
@@ -41,8 +41,8 @@ async function isAuthenticated(req) {
     const user = await getCurrentUser(req);
     return !!user;
 }
-function verifyPassword(username, password) {
-    const settings = (0, store_1.getSettings)();
+async function verifyPassword(username, password) {
+    const settings = await (0, store_1.getSettings)();
     const user = settings.users.find(u => u.username === username);
     if (!user)
         return false;

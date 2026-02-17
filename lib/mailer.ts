@@ -1,27 +1,27 @@
 import nodemailer from 'nodemailer';
-import { getSettings } from './store';
+import { getSMTPSettings } from './store';
 
 export async function sendEmail(to: string, subject: string, text: string) {
-    const settings = getSettings();
-    if (!settings.smtp || !settings.smtp.enabled) {
+    const smtp = await getSMTPSettings();
+    if (!smtp || !smtp.enabled) {
         console.log("SMTP not configured or enabled. Skipping email.");
         console.log(`To: ${to}\nSubject: ${subject}\nText: ${text}`);
         return false;
     }
 
     const transporter = nodemailer.createTransport({
-        host: settings.smtp.host,
-        port: settings.smtp.port,
-        secure: settings.smtp.secure,
+        host: smtp.host,
+        port: smtp.port,
+        secure: smtp.secure,
         auth: {
-            user: settings.smtp.user,
-            pass: settings.smtp.pass
+            user: smtp.user,
+            pass: smtp.pass
         }
     });
 
     try {
         await transporter.sendMail({
-            from: settings.smtp.from,
+            from: smtp.from,
             to,
             subject,
             text

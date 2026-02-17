@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getSettings, saveSettings } from '@/lib/store';
+import { createInvite } from '@/lib/store';
 import { getCurrentUser } from '@/lib/auth';
 import { randomBytes } from 'crypto';
 
@@ -13,16 +13,13 @@ export async function POST(request: NextRequest) {
         const body = await request.json();
         const code = randomBytes(16).toString('hex');
 
-        const settings = getSettings();
-        settings.invites.push({
+        await createInvite({
             code,
             role: body.role || 'user',
             allowedDomains: body.allowedDomains || [],
             used: false,
             expiresAt: Date.now() + 1000 * 60 * 60 * 48 // 48 hours
         });
-
-        saveSettings(settings);
 
         // Return full link or just code? Return full link for convenience
         const origin = request.nextUrl.origin;
@@ -32,6 +29,7 @@ export async function POST(request: NextRequest) {
             link: `${origin}/register/${code}`
         });
     } catch (error) {
+        console.error('Invite creation error:', error);
         return NextResponse.json({ error: 'Invalid Request' }, { status: 400 });
     }
 }

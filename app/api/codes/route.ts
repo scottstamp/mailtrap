@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    let emails = getEmails();
+    let emails = await getEmails();
 
     // Filter based on user allowed domains
     if (user.role !== 'admin' && !user.allowedDomains.includes('*')) {
